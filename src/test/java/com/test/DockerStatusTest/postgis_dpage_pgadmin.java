@@ -12,17 +12,16 @@ import java.util.Properties;
 public class postgis_dpage_pgadmin {
 
     @Test(priority = 1)
-    public void postgis_dpage_pgadmin() {
+    public void postgis_dpage_pgadmin_Status() {
 
         String vmIpAddress = "172.20.23.157";
         String username = "appUser";
         String password = "Brain@123";
-        String containerId = "7bbf2d99d1df";
+        String containerName = "pgadmin_gliacoder";  
+        System.out.println("postgis_dpage_pgadmin Docker Name = " + containerName);
 
-        System.out.println("postgis_dpage_pgadmin Docker ID = " + containerId);
-
-        if (containerId.isEmpty()) {
-            System.out.println("Container ID is required.");
+        if (containerName.isEmpty()) {
+            System.out.println("Container name is required.");
             return;
         }
 
@@ -33,9 +32,9 @@ public class postgis_dpage_pgadmin {
             session.setConfig("StrictHostKeyChecking", "no");
             session.connect();
 
-            // Execute the docker inspect command to check the container's status
+            // ✅ Inspect container by name instead of ID
             ChannelExec channel = (ChannelExec) session.openChannel("exec");
-            channel.setCommand("docker inspect --format='{{.State.Status}}' " + containerId);
+            channel.setCommand("docker inspect --format='{{.State.Status}}' " + containerName);
             channel.setInputStream(null);
             channel.setErrStream(System.err);
             BufferedReader reader = new BufferedReader(new InputStreamReader(channel.getInputStream()));
@@ -56,7 +55,7 @@ public class postgis_dpage_pgadmin {
 
             // If container is not running, send alert
             if (!isRunning) {
-                sendEmailAlert("Hi,\n\n🚨 This is postgis_dpage_pgadmin Docker. I am currently down. Kindly restart the container at your earliest convenience.");
+                sendEmailAlert("Hi,\n\n🚨 This is `pgadmin_gliacoder` (postgis_dpage_pgadmin) Docker. I am currently down. Kindly restart the container at your earliest convenience.");
                 assert false : "Container is not in the expected state.";
             }
 
@@ -82,7 +81,7 @@ public class postgis_dpage_pgadmin {
             "gayathri@htic.iitm.ac.in"
         };
 
-        String subject = "Docker Container Alert - postgis_dpage_pgadmin";
+        String subject = "Docker Container Alert - pgadmin_gliacoder (postgis_dpage_pgadmin)";
         final String username = "automationsoftware25@gmail.com";
         final String password = "wjzcgaramsqvagxu"; // App-specific password
 
@@ -122,4 +121,3 @@ public class postgis_dpage_pgadmin {
         }
     }
 }
-
