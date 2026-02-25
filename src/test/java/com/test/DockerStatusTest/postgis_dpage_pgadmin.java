@@ -15,8 +15,8 @@ public class postgis_dpage_pgadmin {
     public void postgis_dpage_pgadmin_Status() {
 
         String vmIpAddress = "172.20.23.157";
-        String username = "appUser";
-        String password = "Brain@123";
+        String username = "hbp";
+        String password = "hbpsgbclab@123";
         String containerName = "pgadmin_gliacoder";  
         System.out.println("postgis_dpage_pgadmin Docker Name = " + containerName);
 
@@ -121,3 +121,4 @@ public class postgis_dpage_pgadmin {
         }
     }
 }
+
